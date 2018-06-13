@@ -4,10 +4,10 @@ Replacement for default Mule logger. This custom logger helps in standardizing t
 
 ## When to use this custom logger?
 
-a) When an organization intends to limit or standardize the attributes that get logged
-b) To enforce logging standards
-c) Developers often don't log useful information leading to more time spent in troubleshooting
-d) Standardized logs help in integration with Log analysis tools like Splunk
+- When an organization intends to limit or standardize the attributes that get logged
+- To enforce logging standards
+- Developers often don't log useful information leading to more time spent in troubleshooting
+- Standardized logs help in integration with Log analysis tools like Splunk
 
 
 ## How to install this custom logger?
