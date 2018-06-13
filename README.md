@@ -11,10 +11,12 @@ Replacement for default Mule logger. This custom logger helps in standardizing t
 
 
 ## How to install this custom logger?
-Install the plugin to a maven repository using command -
 
-Download the project on your system. Run the following command on the root project folder 
-mvn clean install 
+
+Download the project on your system. 
+Install the plugin to a maven repository using command on the root project folder 
+
+**_mvn clean install_** 
 
 ## How to add this logger to Mule application? 
 
