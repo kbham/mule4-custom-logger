@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.mulesoft.org/schema/mule/customlogger" attributeFormDefault="unqualified" elementFormDefault="qualified">
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace"></xs:import>
+  <xs:import namespace="http://www.springframework.org/schema/beans" schemaLocation="http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"></xs:import>
+  <xs:import namespace="http://www.mulesoft.org/schema/mule/core" schemaLocation="http://www.mulesoft.org/schema/mule/core/current/mule.xsd"></xs:import>
+  <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" substitutionGroup="mule:abstract-shared-extension" name="config">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="mule:abstractExtensionType">
+          <xs:annotation>
+            <xs:documentation>Default configuration</xs:documentation>
+          </xs:annotation>
+          <xs:sequence minOccurs="0" maxOccurs="1">
+            <xs:element minOccurs="0" maxOccurs="1" ref="mule:expiration-policy"></xs:element>
+          </xs:sequence>
+          <xs:attribute type="xs:string" use="required" name="name"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="required" name="configId"></xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/customlogger" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="LogCustomExceptionType" substitutionGroup="mule:abstract-operator" name="log-custom-exception">
+    <xs:annotation>
+      <xs:documentation>This method should be  used in an Error Handler to log additional information about the error</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="LogCustomExceptionType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractOperatorType">
+        <xs:sequence minOccurs="0" maxOccurs="1"></xs:sequence>
+        <xs:attribute type="mule:expressionString" use="required" name="logMessage"></xs:attribute>
+        <xs:attribute type="xs:string" use="optional" default="#[]" name="message"></xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" default="#[message.correlationId]" name="correlationId"></xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/customlogger" type="com.mulesoft.services.internal.metadata.LoggerUtils.LogLevelEnumType" use="optional" default="ERROR" name="logLevel"></xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" name="exceptionMsg"></xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" name="exceptionDetailMsg"></xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/customlogger" type="com.mulesoft.services.internal.metadata.ExceptionDetails.ExceptionTypeEnumType" use="optional" default="BUSINESS" name="exceptionType"></xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/customlogger" type="com.mulesoft.services.internal.metadata.ExceptionDetails.ExceptionSeverityEnumType" use="optional" default="MEDIUM" name="exceptionSeverity"></xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/customlogger" type="com.mulesoft.services.internal.metadata.LoggerUtils.LogCategoryEnumType" use="optional" default="BASE" name="exceptionCategory"></xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/customlogger" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="LogDefaultType" substitutionGroup="mule:abstract-operator" name="log-default">
+    <xs:annotation>
+      <xs:documentation>This method should be  used to log messages to the logger - preferably for the INFO and DEBUG ones</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="LogDefaultType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractOperatorType">
+        <xs:sequence minOccurs="0" maxOccurs="1"></xs:sequence>
+        <xs:attribute type="mule:expressionString" use="required" name="logMessage"></xs:attribute>
+        <xs:attribute type="xs:string" use="optional" default="#[]" name="expr"></xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" default="#[message.correlationId]" name="correlationId"></xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/customlogger" type="com.mulesoft.services.internal.metadata.LoggerUtils.LogLevelEnumType" use="optional" default="INFO" name="logLevel"></xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/customlogger" type="com.mulesoft.services.internal.metadata.LoggerUtils.LogCategoryEnumType" use="optional" default="BASE" name="exceptionCategory"></xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="com.mulesoft.services.internal.metadata.LoggerUtils.LogLevelEnumType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="ERROR"></xs:enumeration>
+          <xs:enumeration value="INFO"></xs:enumeration>
+          <xs:enumeration value="DEBUG"></xs:enumeration>
+          <xs:enumeration value="WARN"></xs:enumeration>
+          <xs:enumeration value="TRACE"></xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="com.mulesoft.services.internal.metadata.ExceptionDetails.ExceptionTypeEnumType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="BUSINESS"></xs:enumeration>
+          <xs:enumeration value="APPLICATION"></xs:enumeration>
+          <xs:enumeration value="SYSTEM"></xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="com.mulesoft.services.internal.metadata.ExceptionDetails.ExceptionSeverityEnumType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="CRITICAL"></xs:enumeration>
+          <xs:enumeration value="HIGH"></xs:enumeration>
+          <xs:enumeration value="MEDIUM"></xs:enumeration>
+          <xs:enumeration value="LOW"></xs:enumeration>
+          <xs:enumeration value="LOWEST"></xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="com.mulesoft.services.internal.metadata.LoggerUtils.LogCategoryEnumType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="BASE"></xs:enumeration>
+          <xs:enumeration value="SECURITY"></xs:enumeration>
+          <xs:enumeration value="AUDIT"></xs:enumeration>
+          <xs:enumeration value="EXCEPTION"></xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+</xs:schema>

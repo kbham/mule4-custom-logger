@@ -1,0 +1,142 @@
+:toc:               left
+:toc-title:         CustomLogger Module
+:toclevels:         2
+:last-update-label!:
+:docinfo:
+:source-highlighter: coderay
+:icons: font
+
+
+= CustomLogger Module Documentation Reference
+
++++
+This is the main class of an extension, is the entry point from which configurations, connection providers, operations and sources are going to be declared.
++++
+
+
+== Configurations
+---
+[[config]]
+=== Config
+
++++
+Default configuration
++++
+
+==== Parameters
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|======================
+| Name | Type | Description | Default Value | Required
+|Name | String | The name for this configuration. Connectors reference the configuration with this name. | | *x*{nbsp}
+| Config Id a| String |  |  | *x*{nbsp}
+| Expiration Policy a| <<ExpirationPolicy>> |  +++Configures the minimum amount of time that a dynamic configuration instance can remain idle before the runtime considers it eligible for expiration. This does not mean that the platform will expire the instance at the exact moment that it becomes eligible. The runtime will actually purge the instances when it sees it fit.+++ |  | {nbsp}
+|======================
+
+
+
+
+
+== Operations
+
+[[logCustomException]]
+=== Log Custom Exception
+`<customlogger:log-custom-exception>`
+
++++
+This method should be  used in an Error Handler to log additional information about the error
++++
+
+==== Parameters
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|======================
+| Name | Type | Description | Default Value | Required
+| Log Message a| String |  +++Message to be logged+++ |  | *x*{nbsp}
+| Log Expression a| Binary |  +++Use this parameter if a dw expression has to be logged+++ |  +++#[]+++ | {nbsp}
+| Correlation ID a| String |  +++Correlation ID to be set+++ |  +++#[message.correlationId]+++ | {nbsp}
+| Log Level a| Enumeration, one of:
+
+** ERROR
+** INFO
+** DEBUG
+** WARN
+** TRACE |  |  +++ERROR+++ | {nbsp}
+| Exception Message a| String |  |  ++++++ | {nbsp}
+| Exception Detail Message a| String |  |  ++++++ | {nbsp}
+| Log Exception Classification a| Enumeration, one of:
+
+** BUSINESS
+** APPLICATION
+** SYSTEM |  |  +++BUSINESS+++ | {nbsp}
+| Exception Severity a| Enumeration, one of:
+
+** CRITICAL
+** HIGH
+** MEDIUM
+** LOW
+** LOWEST |  |  +++MEDIUM+++ | {nbsp}
+| Log Category a| Enumeration, one of:
+
+** BASE
+** SECURITY
+** AUDIT
+** EXCEPTION |  +++Define the log category otherwise this defaults to 'com.mulesoft.log'. Setting the log category is useful when some log messages need to be sent to a seperate appender.+++ |  +++BASE+++ | {nbsp}
+|======================
+
+
+
+
+
+[[logDefault]]
+=== Log Default
+`<customlogger:log-default>`
+
++++
+This method should be  used to log messages to the logger - preferably for the INFO and DEBUG ones
++++
+
+==== Parameters
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|======================
+| Name | Type | Description | Default Value | Required
+| Log Message a| String |  +++Message to be logged+++ |  | *x*{nbsp}
+| Log Expression a| Binary |  +++Use this parameter if a dw expression has to be logged+++ |  +++#[]+++ | {nbsp}
+| Correlation ID a| String |  +++Correlation ID to be set+++ |  +++#[message.correlationId]+++ | {nbsp}
+| Log Level a| Enumeration, one of:
+
+** ERROR
+** INFO
+** DEBUG
+** WARN
+** TRACE |  |  +++INFO+++ | {nbsp}
+| Log Category a| Enumeration, one of:
+
+** BASE
+** SECURITY
+** AUDIT
+** EXCEPTION |  +++Define the log category otherwise this defaults to 'com.mulesoft.log'. Setting the log category is useful when some log messages need to be sent to a seperate appender.+++ |  +++BASE+++ | {nbsp}
+|======================
+
+
+
+
+
+
+== Types
+[[ExpirationPolicy]]
+=== Expiration Policy
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Max Idle Time a| Number | A scalar time value for the maximum amount of time a dynamic configuration instance should be allowed to be idle before it's considered eligible for expiration |  | 
+| Time Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS | A time unit that qualifies the maxIdleTime attribute |  | 
+|======================
+

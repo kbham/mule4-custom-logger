@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension-documentation>
+    <configs>
+        <config name="config">
+            <description><![CDATA[Default configuration]]></description>
+            <parameters>
+                <parameter name="configId">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="expirationPolicy">
+                    <description><![CDATA[Configures the minimum amount of time that a dynamic configuration instance can remain idle before the runtime considers it eligible for expiration. This does not mean that the platform will expire the instance at the exact moment that it becomes eligible. The runtime will actually purge the instances when it sees it fit.]]></description>
+                </parameter>
+            </parameters>
+        </config>
+    </configs>
+    <connections/>
+    <extension name="CustomLogger">
+        <description><![CDATA[This is the main class of an extension, is the entry point from which configurations, connection providers, operations and sources are going to be declared.]]></description>
+        <parameters/>
+    </extension>
+    <operations>
+        <operation name="logCustomException">
+            <description><![CDATA[This method should be  used in an Error Handler to log additional information about the error]]></description>
+            <parameters>
+                <parameter name="logMessage">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="message">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="correlationId">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="logLevel">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="exceptionMsg">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="exceptionDetailMsg">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="exceptionType">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="exceptionSeverity">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="exceptionCategory">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </operation>
+        <operation name="logDefault">
+            <description><![CDATA[This method should be  used to log messages to the logger - preferably for the INFO and DEBUG ones]]></description>
+            <parameters>
+                <parameter name="logMessage">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="expr">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="correlationId">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="logLevel">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="exceptionCategory">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </operation>
+    </operations>
+    <sources/>
+</extension-documentation>
